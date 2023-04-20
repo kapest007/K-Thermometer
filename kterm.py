@@ -3,7 +3,7 @@
 # mit einem M5Stick C und einer K-Meter Unit.
 
 name = 'kterm.py'
-version = '00.00.001'
+version = '00.00.002'
 date = '20.04.2023'
 author = 'Peter Stöck'
 
@@ -13,6 +13,8 @@ author = 'Peter Stöck'
 # Versionen:
 # 00.00.002:
 # Grafische Oberfläche gestaltet.
+# Grundlegende Darstellung und
+# Farbsignalisierung implementiert.
 #
 # 00.00.001:
 # Zugriff auf K-Meter implementiert.
@@ -23,6 +25,9 @@ import unit
 temp = '20.0'
 diplay_breite = 160
 display_hoehe = 80
+
+warn_temperatur = 22
+alarm_temperatur = 25
 
 temp_farbe = 0x00ff00
 
@@ -47,21 +52,16 @@ label_Prog_name.show()
     
 while True:
     temp = KMeter_0.get_kmeter(1)
-    if temp > 25:
+    if temp > alarm_temperatur:
         temp_farbe = alarm_farbe
-    elif temp > 22:
+    elif temp > warn_temperatur:
         temp_farbe = warn_farbe
     else:
         temp_farbe = normal_farbe
-#    addr = hex(KMeter_0.rw_i2c_address())
-#    ver = str(KMeter_0.get_firmware_version())
+
     label_Temperatur.setColor(temp_farbe)
     label_Temperatur.setText(str(temp))
     label_Temperatur.show()
-#    lcd.clear()
-#    label_Prog_name.show()
-#    lcd.print('Version: ' + version, 5, 5, 0xffffff)
-#    lcd.print('I2C Adr: ' + addr, 5, 25, 0xffffff)
-#    lcd.print('Temp: ' + temp, 5, 50, 0xffffff)
+
     wait_ms(300)
 
