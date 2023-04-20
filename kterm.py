@@ -3,7 +3,7 @@
 # mit einem M5Stick C und einer K-Meter Unit.
 
 name = 'kterm.py'
-version = '00.00.002'
+version = '00.00.004'
 date = '20.04.2023'
 author = 'Peter Stöck'
 
@@ -11,6 +11,10 @@ author = 'Peter Stöck'
 # 
 
 # Versionen:
+# 00.00.004:
+# Temperaturanzeige für positive 2 und 3 stellige Zahlen
+# positioniert.
+#
 # 00.00.003:
 # Temperaturanzeige formatiert.
 # °C erzeugt.
@@ -40,6 +44,9 @@ normal_farbe = 0x00ff00
 warn_farbe = 0xffff00
 alarm_farbe = 0xff0000
 
+x_offset_2stellig = 35
+x_offset_3stellig = 10
+
 lcd.setRotation(3)
 
 setScreenColor(0x404040)
@@ -65,6 +72,11 @@ while True:
         temp_farbe = warn_farbe
     else:
         temp_farbe = normal_farbe
+        
+    if temp < 100:
+        label_temperatur.setPosition(x=x_offset_2stellig)
+    else:
+        label_temperatur.setPosition(x=x_offset_3stellig)
 
     label_temperatur.setColor(temp_farbe)
     label_temperatur.setText(str(temp))
