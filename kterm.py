@@ -11,6 +11,9 @@ author = 'Peter Stöck'
 # 
 
 # Versionen:
+# 00.00.003:
+# Temperaturanzeige formatiert.
+#
 # 00.00.002:
 # Grafische Oberfläche gestaltet.
 # Grundlegende Darstellung und
@@ -43,15 +46,17 @@ KMeter_0 = unit.get(unit.KMETER, unit.PORTA)
 # grafische Oberfläche gestalten:
 
 rectangle_title = M5Rect(0, 0, diplay_breite, 20, 0x3366ff, 0x3366ff)
-label_Prog_name = M5TextBox(2, 2, name + ' V:' + version, lcd.FONT_Default, 0x0, rotate=0)
-label_Temperatur = M5TextBox(5, 30, temp, lcd.FONT_DejaVu40, 0xFFFFFF, rotate=0)
+label_prog_name = M5TextBox(2, 2, name + ' V:' + version, lcd.FONT_Default, 0x0, rotate=0)
+label_temperatur = M5TextBox(5, 30, temp, lcd.FONT_DejaVu40, 0xFFFFFF, rotate=0)
+label_grad = M5TextBox(90, 28, 'o', lcd.FONT_DejaVu24, 0xFFFFFF, rotate=0)
+label_celsius = M5TextBox(105, 30, 'C', lcd.FONT_DejaVu40, 0xFFFFFF, rotate=0)
 
 lcd.clear()
 rectangle_title.show()
-label_Prog_name.show()
+label_prog_name.show()
     
 while True:
-    temp = KMeter_0.get_kmeter(1)
+    temp = int(KMeter_0.get_kmeter(1))
     if temp > alarm_temperatur:
         temp_farbe = alarm_farbe
     elif temp > warn_temperatur:
@@ -59,9 +64,13 @@ while True:
     else:
         temp_farbe = normal_farbe
 
-    label_Temperatur.setColor(temp_farbe)
-    label_Temperatur.setText(str(temp))
-    label_Temperatur.show()
+    label_temperatur.setColor(temp_farbe)
+    label_temperatur.setText(str(temp))
+    label_temperatur.show()
+    
+    label_grad.show()
+    
+    label_celsius.show()
 
     wait_ms(300)
 
