@@ -3,7 +3,7 @@
 # mit einem M5Stick C und einer K-Meter Unit.
 
 name = 'kterm.py'
-version = '00.00.004'
+version = '00.00.005'
 date = '20.04.2023'
 author = 'Peter Stöck'
 
@@ -11,6 +11,10 @@ author = 'Peter Stöck'
 # 
 
 # Versionen:
+# 00.00.005:
+# Farbgebung auch für °C implementiert.
+# ° 2 Pixel höher gesetzt.
+#
 # 00.00.004:
 # Temperaturanzeige für positive 2 und 3 stellige Zahlen
 # positioniert.
@@ -57,7 +61,7 @@ KMeter_0 = unit.get(unit.KMETER, unit.PORTA)
 rectangle_title = M5Rect(0, 0, diplay_breite, 20, 0x3366ff, 0x3366ff)
 label_prog_name = M5TextBox(2, 2, name + ' V:' + version, lcd.FONT_Default, 0x0, rotate=0)
 label_temperatur = M5TextBox(5, 30, temp, lcd.FONT_DejaVu40, 0xFFFFFF, rotate=0)
-label_grad = M5TextBox(90, 28, 'o', lcd.FONT_DejaVu24, 0xFFFFFF, rotate=0)
+label_grad = M5TextBox(90, 26, 'o', lcd.FONT_DejaVu24, 0xFFFFFF, rotate=0)
 label_celsius = M5TextBox(105, 30, 'C', lcd.FONT_DejaVu40, 0xFFFFFF, rotate=0)
 
 lcd.clear()
@@ -82,8 +86,10 @@ while True:
     label_temperatur.setText(str(temp))
     label_temperatur.show()
     
+    label_grad.setColor(temp_farbe)
     label_grad.show()
     
+    label_celsius.setColor(temp_farbe)
     label_celsius.show()
 
     wait_ms(300)
