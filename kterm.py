@@ -13,6 +13,8 @@ author = 'Peter Stöck'
 # Versionen:
 # 00.00.003:
 # Temperaturanzeige formatiert.
+# °C erzeugt.
+# Temperatur wird als int verarbeitet.
 #
 # 00.00.002:
 # Grafische Oberfläche gestaltet.
